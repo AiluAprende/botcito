@@ -1,0 +1,28 @@
+{
+  "name": "botcito",
+  "version": "1.0.0",
+  "description": "El bot de Ailu para aprender Node.Js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AiluAprende/Aber-botcito.git"
+  },
+  "keywords": [
+    "bot",
+    "discord",
+    "ailu"
+  ],
+  "author": "\"Ailin \\ <ailu.teco.work@gmail.com\\>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AiluAprende/Aber-botcito/issues"
+  },
+  "homepage": "https://github.com/AiluAprende/Aber-botcito#readme",
+  "dependencies": {
+    "discord.js": "^14.0.0"
+  }
+}
