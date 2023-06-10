@@ -21,11 +21,11 @@ client.on('messageCreate', async (message) => {
 
   const commandBody = message.content.slice(prefix.length);
   const args = commandBody.split(' ');
-  const command = args.shift().toLowerCase();
+  const command = args?.shift().toLowerCase();
 
-  console.log('commandBody', commandBody);
-  console.log('command', command);
-  console.log('args', args);
+  // console.log('commandBody', commandBody);
+  // console.log('command', command);
+  // console.log('args', args);
 
   if (command == "ping") {
     console.log('es igual a ping');
@@ -36,6 +36,10 @@ client.on('messageCreate', async (message) => {
   if (command == "clima") {
 
     const busquedas = new Busquedas();
+    if (args.length < 2) {
+      message.reply('No me diste ningún lugar para buscar su clima');
+      return []
+    }
     const lugares = await busquedas.lugar(args)
 
     const opciones = lugares.map((lugar) => {
@@ -66,13 +70,14 @@ client.on('messageCreate', async (message) => {
         const opcionSeleccionada = interaction.values[0];
         // Aquí puedes hacer algo con la opción seleccionada, como mostrar más detalles o realizar una acción específica
         const lugarElegido = opciones.find(l => l.value === opcionSeleccionada)
+        const soloElegido = lugarElegido.label.split(',', 1)
 
         const clima = await busquedas.climaLugar(lugarElegido.lat, lugarElegido.lon)
 
-        console.log('lugar elegido', lugarElegido);
+        // console.log('lugar elegido', lugarElegido);
 
-        console.log('clima', clima);
-        interaction.reply(`Has seleccionado el objeto ${opcionSeleccionada}`);
+        // console.log('clima', clima);
+        interaction.reply(`Este es el clima en ${soloElegido} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
       }
     })
 

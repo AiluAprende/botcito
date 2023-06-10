@@ -39,10 +39,10 @@ class Busquedas {
    }
 
 
-   async climaLugar(lat, lon) {
+   async climaLugar(lon, lat) {
       try {
          const instance = axios.create({
-            baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_TOKEN}`,
+            baseURL: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${process.env.WEATHER_TOKEN}&units=metric&lang=sp`,
          })
          const resp = await instance.get()
          console.log(resp.data);
