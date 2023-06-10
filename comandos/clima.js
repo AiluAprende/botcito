@@ -39,11 +39,12 @@ const Clima = async (args, message, client) => {
             const opcionSeleccionada = interaction.values[0];
             // Aquí puedes hacer algo con la opción seleccionada, como mostrar más detalles o realizar una acción específica
             const lugarElegido = opciones.find(l => l.value === opcionSeleccionada)
-            const soloElegido = lugarElegido.label.split(',', 1)
+            console.log('lugar elegido', lugarElegido);
+            const soloElegido = opcionSeleccionada.label
 
             const clima = await busquedas.climaLugar(lugarElegido.lat, lugarElegido.lon)
 
-            // console.log('lugar elegido', lugarElegido);
+            console.log('lugar elegido', lugarElegido);
 
             // console.log('clima', clima);
             interaction.reply(`Este es el clima en ${soloElegido} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
