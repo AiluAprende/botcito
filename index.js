@@ -53,7 +53,7 @@ client.on('messageCreate', async (message) => {
     });
 
     const menuLugares = new MessageSelectMenu()
-      .setCustomId(`id`)
+      .setCustomId(`${args}`)
       .setPlaceholder('Selecciona una opción')
       .addOptions(opciones)
 
@@ -65,19 +65,24 @@ client.on('messageCreate', async (message) => {
 
 
     client.on('interactionCreate', async (interaction) => {
-      if (interaction.isSelectMenu()) {
-        // console.log('interaccion:', interaction)
-        const opcionSeleccionada = interaction.values[0];
-        // Aquí puedes hacer algo con la opción seleccionada, como mostrar más detalles o realizar una acción específica
-        const lugarElegido = opciones.find(l => l.value === opcionSeleccionada)
-        // const soloElegido = lugarElegido.label.split(',', 1)
+      console.log('interaciciiiioioon', interaction);
+      try {
+        if (interaction.isSelectMenu()) {
+          // console.log('interaccion:', interaction)
+          const opcionSeleccionada = interaction.values[0];
+          // Aquí puedes hacer algo con la opción seleccionada, como mostrar más detalles o realizar una acción específica
+          const lugarElegido = await opciones.find(l => l.value === opcionSeleccionada)
+          // const soloElegido = lugarElegido.label.split(',', 1)
 
-        const clima = await busquedas.climaLugar(lugarElegido.lat, lugarElegido.lon)
+          // console.log('lugar elegido 1', lugarElegido.lat, lugarElegido.lon);
+          const clima = await busquedas.climaLugar(lugarElegido.lat, lugarElegido.lon)
+          // console.log('lugar elegido 2', lugarElegido);
 
-        // console.log('lugar elegido', lugarElegido);
-
-        // console.log('clima', clima);
-        interaction.reply(`Este es el clima en ${lugarElegido.label} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
+          // console.log('clima', clima);
+          interaction.reply(`Este es el clima en ${lugarElegido.label} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
+        }
+      } catch (error) {
+        console.log(error.message)
       }
     })
 
