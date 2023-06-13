@@ -1,6 +1,6 @@
 require('dotenv').config()
+const Busquedas = require("./models/busquedas")
 const { Client, Intents, MessageActionRow, MessageSelectMenu } = require("discord.js");
-const Clima = require('./comandos/clima');
 
 const client = new Client({
   intents: [
@@ -36,7 +36,7 @@ client.on('messageCreate', async (message) => {
   if (command == "clima") {
 
     const busquedas = new Busquedas();
-    if (args.length < 2) {
+    if (args.length < 1) {
       message.reply('No me diste ningún lugar para buscar su clima');
       return []
     }
@@ -70,14 +70,14 @@ client.on('messageCreate', async (message) => {
         const opcionSeleccionada = interaction.values[0];
         // Aquí puedes hacer algo con la opción seleccionada, como mostrar más detalles o realizar una acción específica
         const lugarElegido = opciones.find(l => l.value === opcionSeleccionada)
-        const soloElegido = lugarElegido.label.split(',', 1)
+        // const soloElegido = lugarElegido.label.split(',', 1)
 
         const clima = await busquedas.climaLugar(lugarElegido.lat, lugarElegido.lon)
 
         // console.log('lugar elegido', lugarElegido);
 
         // console.log('clima', clima);
-        interaction.reply(`Este es el clima en ${soloElegido} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
+        interaction.reply(`Este es el clima en ${lugarElegido.label} \n :small_orange_diamond: Temperatura: ${clima.main.temp}° \n :small_orange_diamond: Sensación térmica: ${clima.main.feels_like}° \n :small_orange_diamond: Humedad: ${clima.main.humidity}% \n :small_orange_diamond: Descripción: ${clima.weather[0].description}`);
       }
     })
 
